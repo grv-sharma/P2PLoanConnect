@@ -9,10 +9,10 @@ const generateToken = (userId) => {
 // Register a new user
 exports.register = async (req, res) => {
     try {
-        const {name, email, password, phone } = req.body;
+        const {name, email, password, phone, aadharNumber } = req.body;
 
         // check if user already exists
-        const existingUser = await user.findOne({ email });
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
         }
@@ -22,7 +22,8 @@ exports.register = async (req, res) => {
             name, 
             email, 
             password, 
-            phone
+            phone,
+            aadharNumber
         });
 
         await user.save();
@@ -39,6 +40,7 @@ exports.register = async (req, res) => {
                 name: user.name,
                 email: user.email,
                 phone: user.phone,
+                aadharNumber: user.aadhaarNumber,
                 aadharVerified: user.aadharVerified,
                 rating: user.rating
             },
@@ -102,7 +104,7 @@ exports.getProfile = async (req, res) => {
 };
 
 // Update user profile
-exports.getProfile = async (req, res) => {
+exports.updateProfile = async (req, res) => {
     try {
         const { name, phone, aadhaarNumber } = req.body; 
 

@@ -33,7 +33,16 @@ app.use((err, req, res, next) => {
 });
 
 // Handle 404
-app.use('*', (req, res) => {
+// This was done because Express-6 has strict routing and does not allow wildcard routes like '/*' to be defined
+// directly. Instead, we use '/*splat' to catch all unmatched routes.
+// This is useful for handling 404 errors or redirecting to a custom 404 page.
+// Note: '/*splat' is a special route that matches all paths and captures the remaining part of the URL as a parameter named 'splat'.
+// This allows us to handle all unmatched routes in a single middleware function.
+// If you want to handle specific routes, you can define them before this middleware.
+// For example, if you have a route like '/api/users', it will be matched before this middleware, and any unmatched routes will fall through to this handler.
+// This is a common pattern in Express applications to ensure that all routes are handled properly and to provide a consistent response for unmatched routes.   
+
+app.use('/*splat', (req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
 
