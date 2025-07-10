@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     },
     Phone: {
         type: String,
-        required: true,,
+        required: true,
     },
     aadharNumber: {
         type: String,
@@ -67,7 +67,8 @@ const userSchema = new mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true,
-    },{
+    }
+}, {
         timestamps: true
     });
     
